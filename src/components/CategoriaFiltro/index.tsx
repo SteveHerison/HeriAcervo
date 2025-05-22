@@ -2,10 +2,10 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-interface CategoryFilterProps {
-  categories: string[];
-  activeCategory: string | null;
-  onSelectCategory: (category: string | null) => void;
+export interface CategoryFilterProps {
+  categories: { id: number; name: string }[];
+  activeCategory: number | null;
+  onSelectCategory: (category: number | null) => void;
   className?: string;
 }
 
@@ -31,16 +31,16 @@ export default function CategoryFilter({
 
       {categories.map((category) => (
         <Button
-          key={category}
+          key={category.id}
           variant="outline"
           size="sm"
           className={cn(
             "rounded-full border-green-300",
-            activeCategory === category && "bg-green-100 border-green-400"
+            activeCategory === category.id && "bg-green-100 border-green-400"
           )}
-          onClick={() => onSelectCategory(category)}
+          onClick={() => onSelectCategory(category.id)}
         >
-          {category}
+          {category.name}
         </Button>
       ))}
     </div>

@@ -8,13 +8,12 @@ import Link from "next/link";
 import Image from "next/image";
 import CategoryFilter from "@/components/CategoriaFiltro";
 
-import React, { useEffect, useState } from "react";
-
-import { categories } from "@/data/categorias";
+import React, { useEffect, useState, useCallback } from "react";
 import ModalAdd from "@/components/modals/ShowModalAddArticle";
 import { useAuth } from "@/context/authContext";
 import { LoginModal } from "@/components/modals/LoginModal";
 import axios from "axios";
+import { Sucess } from "@/components/modals/Sucess";
 
 interface Article {
   id: number;
@@ -23,26 +22,37 @@ interface Article {
   description: string;
   url: string;
   image?: string;
+  categoryId: number;
   category: string;
   createdAt: string;
 }
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const [modalAdd, setModalAdd] = useState(false);
   const { isLoggedIn } = useAuth();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    []
+  );
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [articles, setArticles] = useState<Article[]>([]);
 
-  const getArticles = async () => {
+  const getArticles = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:3001/articles");
-      setArticles(response.data); // salva os artigos no estado
+      const response = await axios.get("http://localhost:3001/articles", {
+        params: activeCategory ? { categoryId: activeCategory } : {},
+      });
+      setArticles(response.data);
     } catch (error) {
       console.error("Erro ao buscar artigos:", error);
     }
-  };
+  }, [activeCategory]);
+
+  useEffect(() => {
+    getArticles();
+  }, [getArticles]);
 
   const handleAdd = () => {
     if (!isLoggedIn) {
@@ -54,9 +64,26 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getArticles();
-  }, []);
+    if (showSuccessModal) {
+      const timer = setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 3000); // 3 segundos
 
+      return () => clearTimeout(timer); // limpa o timer se o componente desmontar ou o modal fechar antes
+    }
+  }, [showSuccessModal]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await axios.get("http://localhost:3001/categories");
+        setCategories(res.data);
+      } catch (error) {
+        console.error("Erro ao buscar categorias:", error);
+      }
+    }
+    fetchCategories();
+  }, []);
   useEffect(() => {
     if (modalAdd) {
       document.body.style.overflow = "hidden";
@@ -70,13 +97,13 @@ export default function Home() {
   }, [modalAdd]);
 
   const filteredItems = activeCategory
-    ? articles.filter((item) => item.category === activeCategory)
+    ? articles.filter((item) => item.categoryId === activeCategory)
     : articles;
 
   return (
     <main className="min-h-screen relative">
       <Header setModalAdd={handleAdd} />
-      <main className="flex-grow">
+      <main className="flex-grow ">
         <Hero />
 
         <section className="py-12 bg-green-50/50">
@@ -84,26 +111,32 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-bold text-center text-green-900 mb-8">
               Explore por Categoria
             </h2>
-            <CategoryFilter
-              categories={categories}
-              activeCategory={activeCategory}
-              onSelectCategory={setActiveCategory}
-              className="justify-center mb-8"
-            />
+            {categories.length > 0 && (
+              <CategoryFilter
+                categories={categories}
+                activeCategory={activeCategory}
+                onSelectCategory={setActiveCategory}
+                className="justify-center mb-8"
+              />
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2 ">
               {filteredItems.map((item) => (
                 <Card
                   key={item.id}
                   className="overflow-hidden border-green-200"
                 >
-                  <div className="aspect-[16/9] overflow-hidden">
+                  <div className="aspect-[16/9] overflow-hidden rounded-lg bg-gray-100">
                     <Image
-                      src={item.image || "/default-image.png"}
+                      src={
+                        item.image
+                          ? `http://localhost:3001/uploads/${item.image}`
+                          : "/default-image.png"
+                      }
                       alt={item.title}
                       width={400}
                       height={225}
                       unoptimized
-                      className="w-full h-full object-center transition-transform duration-300 hover:scale-105"
+                      className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
                     />
                   </div>
                   <CardContent className="p-6">
@@ -118,8 +151,9 @@ export default function Home() {
                         {new Date(item.createdAt).getFullYear()} Ano PB
                       </span>
                       <Link
-                        href={`/colecao/${item.id}`}
+                        href={`${item.url}`}
                         className="text-emerald-600 hover:text-emerald-700 font-medium text-sm"
+                        target="_blank"
                       >
                         Ver Artigo →
                       </Link>
@@ -143,8 +177,15 @@ export default function Home() {
       </main>
       <Footer />
       {modalAdd && (
-        <ModalAdd setModalAdd={setModalAdd} refreshArticles={getArticles} />
+        <ModalAdd
+          setModalAdd={setModalAdd}
+          refreshArticles={getArticles}
+          categories={categories}
+          onSuccess={() => setShowSuccessModal(true)}
+        />
       )}
+      {showSuccessModal && <Sucess />}
+
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}

@@ -4,58 +4,95 @@ import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import axios from "axios";
+import { SelectCategory } from "../Category";
 
-type ModalAddProps = {
-  setModalAdd: (value: boolean) => void;
-  refreshArticles: () => Promise<void>;
-};
+interface ModalAddProps {
+  setModalAdd: (open: boolean) => void;
+  refreshArticles: () => void;
+  categories: { id: number; name: string }[];
+  onSuccess: () => void;
+}
 
 export default function ModalAdd({
   setModalAdd,
   refreshArticles,
+  categories,
+  onSuccess,
 }: ModalAddProps) {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
     description: "",
     url: "",
-    image: "",
-    category: "",
+    image: null as File | null,
+    category: null as number | null,
   });
 
   // Função para atualizar os campos do form
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, type } = e.target as HTMLInputElement;
+
+    if (type === "file") {
+      setFormData((prev) => ({
+        ...prev,
+        image: (e.target as HTMLInputElement).files?.[0] || null,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   }
 
   // Função para tratar o submit do form
-  async function handleSubmit(e: FormEvent) {
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
     try {
-      const token = localStorage.getItem("token"); // se backend usa autenticação
-      await axios.post(
-        "http://localhost:3001/articles", // sua rota para criar artigo
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // se proteger rota
-          },
-        }
-      );
+      const token = localStorage.getItem("token");
+
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("author", formData.author);
+      data.append("description", formData.description);
+      data.append("url", formData.url);
+      if (formData.image) {
+        data.append("image", formData.image);
+      }
+      if (formData.category !== null) {
+        data.append("category", String(formData.category));
+      }
+
+      await axios.post("http://localhost:3001/articles", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      onSuccess();
+
       await refreshArticles();
-      alert("Artigo salvo com sucesso!");
+
       setModalAdd(false);
-    } catch (error) {
-      console.error("Erro ao salvar artigo:", error);
-      alert("Erro ao salvar artigo");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(
+          `Erro ao salvar artigo: ${
+            error.response?.data
+              ? JSON.stringify(error.response.data)
+              : error.message
+          }`
+        );
+      } else {
+        alert("Erro desconhecido ao salvar artigo");
+      }
     }
   }
 
@@ -105,17 +142,18 @@ export default function ModalAdd({
           />
           <Input
             name="image"
-            placeholder="URL da imagem"
-            value={formData.image}
+            type="file"
+            accept="image/*"
             onChange={handleChange}
             required
           />
-          <Input
-            name="category"
-            placeholder="Categoria"
-            value={formData.category}
-            onChange={handleChange}
-            required
+
+          <SelectCategory
+            category={formData.category}
+            onChange={(value) =>
+              setFormData((prev) => ({ ...prev, category: value }))
+            }
+            options={categories.map(({ id, name }) => ({ id, name }))}
           />
 
           <div className="pt-4 flex justify-end">
