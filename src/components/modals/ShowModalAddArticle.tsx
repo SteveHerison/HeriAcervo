@@ -70,7 +70,7 @@ export default function ModalAdd({
       }
 
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}articles`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/articles`,
         data,
         {
           headers: {

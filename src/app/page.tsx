@@ -42,7 +42,7 @@ export default function Home() {
   const getArticles = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}articles`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/articles`,
         {
           params: activeCategory ? { categoryId: activeCategory } : {},
         }
@@ -80,7 +80,7 @@ export default function Home() {
     async function fetchCategories() {
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}categories`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`
         );
         setCategories(res.data);
       } catch (error) {
@@ -104,14 +104,6 @@ export default function Home() {
   const filteredItems = activeCategory
     ? articles.filter((item) => item.categoryId === activeCategory)
     : articles;
-
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  if (!baseUrl) {
-    throw new Error(
-      "Variável de ambiente NEXT_PUBLIC_API_BASE_URL não está definida."
-    );
-  }
 
   return (
     <main className="min-h-screen relative">
@@ -142,10 +134,7 @@ export default function Home() {
                     <Image
                       src={
                         item.image
-                          ? `${baseUrl.replace(/\/$/, "")}/${item.image.replace(
-                              /^\//,
-                              ""
-                            )}`
+                          ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${item.image}`
                           : "/default-image.png"
                       }
                       alt={item.title}

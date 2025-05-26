@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const token = localStorage.getItem("token");
     if (token) {
       axios
-        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}me`, {
+        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}login`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`,
         {
           email,
           password,
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoggedIn(true);
 
       const userRes = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}me`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
