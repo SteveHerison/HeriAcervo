@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const token = localStorage.getItem("token");
     if (token) {
       axios
-        .get("http://localhost:3001/me", {
+        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,20 +44,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post("http://localhost:3001/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}login`,
+        {
+          email,
+          password,
+        }
+      );
       const token = response.data.token;
 
       localStorage.setItem("token", token);
       setIsLoggedIn(true);
 
-      const userRes = await axios.get("http://localhost:3001/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const userRes = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}me`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setUser(userRes.data);
     } catch (error) {

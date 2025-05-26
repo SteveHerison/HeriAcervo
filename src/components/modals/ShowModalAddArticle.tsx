@@ -69,12 +69,16 @@ export default function ModalAdd({
         data.append("category", String(formData.category));
       }
 
-      await axios.post("http://localhost:3001/articles", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}articles`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       onSuccess();
 
