@@ -16,7 +16,7 @@ export const Header = ({ setModalAdd }: modalAdd) => {
     if (typeof window !== "undefined") {
       const currentDomain = window.location.hostname;
       setIsOcupacionalDomain(
-        currentDomain === "https://heri-acervo.vercel.app"
+        currentDomain === "https://acervoocupacional.vercel.app"
       );
     }
   }, []);
