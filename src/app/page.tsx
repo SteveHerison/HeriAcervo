@@ -174,7 +174,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-16">
+        <section className="py-16" id="footer">
           <div className="container mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-green-900 mb-12">
               Informações
