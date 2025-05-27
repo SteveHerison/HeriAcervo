@@ -62,9 +62,7 @@ export default function ModalAdd({
       data.append("author", formData.author);
       data.append("description", formData.description);
       data.append("url", formData.url);
-      if (formData.image) {
-        data.append("image", formData.image);
-      }
+
       if (formData.category !== null) {
         data.append("category", String(formData.category));
       }
@@ -141,13 +139,6 @@ export default function ModalAdd({
             name="url"
             placeholder="URL do artigo"
             value={formData.url}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            name="image"
-            type="file"
-            accept="image/*"
             onChange={handleChange}
             required
           />

@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import Image from "next/image";
+
 import CategoryFilter from "@/components/CategoriaFiltro";
 
 import React, { useEffect, useState, useCallback } from "react";
@@ -130,20 +130,6 @@ export default function Home() {
                   key={item.id}
                   className="overflow-hidden border-green-200"
                 >
-                  <div className="aspect-[16/9] overflow-hidden rounded-lg bg-gray-100">
-                    <Image
-                      src={
-                        item.image
-                          ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${item.image}`
-                          : "/default-image.png"
-                      }
-                      alt={item.title}
-                      width={400}
-                      height={225}
-                      unoptimized
-                      className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
-                    />
-                  </div>
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-green-900 mb-2">
                       {item.title}
