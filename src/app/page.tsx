@@ -36,6 +36,7 @@ export default function Home() {
     []
   );
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [articles, setArticles] = useState<Article[]>([]);
 
@@ -100,10 +101,17 @@ export default function Home() {
       document.body.style.overflow = "";
     };
   }, [modalAdd]);
+  const filteredItems = articles.filter((item) => {
+    const matchesCategory = activeCategory
+      ? item.categoryId === activeCategory
+      : true;
+    const matchesSearch =
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-  const filteredItems = activeCategory
-    ? articles.filter((item) => item.categoryId === activeCategory)
-    : articles;
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <main className="min-h-screen relative">
@@ -124,6 +132,14 @@ export default function Home() {
                 className="justify-center mb-8"
               />
             )}
+            <input
+              type="text"
+              placeholder="Buscar artigo por título, autor ou descrição..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full max-w-md mx-auto block px-4 py-2 border border-green-300 rounded-lg mb-8 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6  ">
               {filteredItems.map((item) => (
                 <Card
