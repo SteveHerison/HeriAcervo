@@ -172,16 +172,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <section className="py-16">
-          <div className="container mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-center text-green-900 mb-12">
-              Exposições em Destaque
-            </h2>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
-          </div>
-        </section>
       </main>
       <Footer />
       {modalAdd && (

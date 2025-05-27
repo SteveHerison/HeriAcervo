@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/assets/img/logo.png";
-import Link from "next/link";
+
 import Image from "next/image";
 
 export default function Hero() {
@@ -37,14 +37,6 @@ export default function Hero() {
                 className=" text-emerald-800 hover:bg-green-100 bg-primary-foreground"
               >
                 Explorar Coleção
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="text-emerald-800 bg-primary-foreground"
-              >
-                <Link href="/">Exposições em Destaque</Link>
               </Button>
             </div>
           </div>
