@@ -49,6 +49,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         {
           email,
           password,
+        },
+        {
+          withCredentials: true,
         }
       );
       const token = response.data.token;
@@ -62,6 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
 
