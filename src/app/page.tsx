@@ -14,6 +14,7 @@ import { useAuth } from "@/context/authContext";
 import { LoginModal } from "@/components/modals/LoginModal";
 import axios from "axios";
 import { Sucess } from "@/components/modals/Sucess";
+import { CardsVisitas } from "@/components/CartoesDeVisita";
 
 interface Article {
   id: number;
@@ -140,7 +141,7 @@ export default function Home() {
               className="w-full max-w-md mx-auto block px-4 py-2 border border-green-300 rounded-lg mb-8 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6  ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6  px-3">
               {filteredItems.map((item) => (
                 <Card
                   key={item.id}
@@ -169,6 +170,18 @@ export default function Home() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16">
+          <div className="container mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-green-900 mb-12">
+              Informações
+            </h2>
+
+            <div className="grid grid-cols-1 gap-8">
+              <CardsVisitas />
             </div>
           </div>
         </section>

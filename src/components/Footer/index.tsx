@@ -15,7 +15,7 @@ export default function Footer() {
               Acervo Virtual Terapia Ocupacional
             </h3>
 
-            <p className="text-green-200 max-w-xs">
+            <p className="text-green-200 max-w-xl">
               Acervo digital organizado pelo Centro Acadêmico da Unifor,
               reunindo conteúdos relevantes sobre a história, práticas e
               contribuições da Terapia Ocupacional.
