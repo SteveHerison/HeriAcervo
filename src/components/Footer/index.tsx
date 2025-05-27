@@ -30,6 +30,7 @@ export default function Footer() {
                 <Link
                   href="https://www.instagram.com/catounifor?igsh=Y2lqeXRkcmh0bW50"
                   target="_blank"
+                  className="flex items-center  gap-2"
                 >
                   <Instagram />
                   <p>catounifor</p>
