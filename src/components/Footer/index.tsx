@@ -32,6 +32,7 @@ export default function Footer() {
                   target="_blank"
                 >
                   <Instagram />
+                  <p>catounifor</p>
                 </Link>
               </li>
             </ul>
