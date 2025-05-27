@@ -15,9 +15,7 @@ export const Header = ({ setModalAdd }: modalAdd) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const currentDomain = window.location.hostname;
-      setIsOcupacionalDomain(
-        currentDomain === "https://acervoocupacional.vercel.app"
-      );
+      setIsOcupacionalDomain(currentDomain === "acervoocupacional.vercel.app");
     }
   }, []);
 
@@ -28,9 +26,17 @@ export const Header = ({ setModalAdd }: modalAdd) => {
           <Image src={logo} alt="" className="w-20 h-20" />
         </Link>
         <div className="flex items-center gap-4 pr-4">
-          <ul className="md:flex gap-4 hidden">
-            <li>Sobre</li>
-          </ul>
+          <Button
+            onClick={() => {
+              const element = document.getElementById("footer");
+              if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Sobre
+          </Button>
+
           {isOcupacionalDomain && (
             <Button onClick={() => setModalAdd(true)}>Adicionar Artigo</Button>
           )}
