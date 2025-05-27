@@ -1,6 +1,37 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+interface TruncatedDescriptionProps {
+  text: string;
+  maxLength?: number;
+}
+
+export function TruncatedDescription({
+  text,
+  maxLength = 400,
+}: TruncatedDescriptionProps) {
+  const [expanded, setExpanded] = useState(false);
+
+  if (text.length <= maxLength) {
+    return <p>{text}</p>;
+  }
+
+  return (
+    <div>
+      <p className="text-green-700 mb-4">
+        {expanded ? text : text.slice(0, maxLength) + "..."}
+      </p>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className=" hover:underline text-sm text-green-700 mb-4"
+      >
+        {expanded ? "Ver menos" : "Ver mais"}
+      </button>
+    </div>
+  );
+}
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (

@@ -69,13 +69,7 @@ export default function ModalAdd({
 
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/articles`,
-        {
-          title: formData.title,
-          author: formData.author,
-          description: formData.description,
-          url: formData.url,
-          category: formData.category,
-        },
+        data,
         {
           headers: {
             Authorization: `Bearer ${token}`,

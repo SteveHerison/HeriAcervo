@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { Header } from "@/components/Header";
 import Hero from "@/components/Hero";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, TruncatedDescription } from "@/components/ui/card";
 import Link from "next/link";
 
 import CategoryFilter from "@/components/CategoriaFiltro";
@@ -111,7 +111,7 @@ export default function Home() {
       <main className="flex-grow ">
         <Hero />
 
-        <section className="py-12 bg-green-50/50">
+        <section className="py-12 bg-green-50/50" id="artigos">
           <div className="container mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-green-900 mb-8">
               Explore por Categoria
@@ -124,23 +124,24 @@ export default function Home() {
                 className="justify-center mb-8"
               />
             )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2 ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6  ">
               {filteredItems.map((item) => (
                 <Card
                   key={item.id}
                   className="overflow-hidden border-green-200"
                 >
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 h-full  flex flex-col">
                     <h3 className="text-xl font-semibold text-green-900 mb-2">
                       {item.title}
                     </h3>
                     <p className="text-green-700 mb-4">{item.author}</p>{" "}
                     {/* ajustado para autor */}
-                    <p className="text-green-700 mb-4">{item.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-green-600">
-                        {new Date(item.createdAt).getFullYear()} Ano PB
-                      </span>
+                    <TruncatedDescription
+                      text={item.description}
+                      maxLength={100}
+                    />
+                    <div className=" h-full flex items-end">
+                      <span className="text-sm text-green-600"></span>
                       <Link
                         href={`${item.url}`}
                         className="text-emerald-600 hover:text-emerald-700 font-medium text-sm"

@@ -29,7 +29,13 @@ export function LoginModal({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40">
-      <div className="bg-white p-6 rounded-lg w-96">
+      <div className="bg-white p-6 rounded-lg w-96 relative">
+        <p
+          className="absolute top-0 right-2 text-lg font-semibold cursor-pointer"
+          onClick={onClose}
+        >
+          X
+        </p>
         <h2 className="text-xl font-bold mb-4">Faça login</h2>
         {error && <p className="text-red-600 mb-2">{error}</p>}
         <input

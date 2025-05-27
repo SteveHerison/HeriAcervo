@@ -27,11 +27,16 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in">
               <Button
-                asChild
+                onClick={() => {
+                  const element = document.getElementById("artigos");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
                 size="lg"
                 className=" text-emerald-800 hover:bg-green-100 bg-primary-foreground"
               >
-                <Link href="/">Explorar Coleção</Link>
+                Explorar Coleção
               </Button>
               <Button
                 asChild
