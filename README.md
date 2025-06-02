@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+[TYPESCRIPT]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[NEXT]: https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white
+[NODE]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
+[TAILWINDCSS]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
+[PROJECT__BADGE]: https://img.shields.io/badge/📱Visit_this_project-000?style=for-the-badge&logo=project
+[PROJECT__URL]: https://herisontech.vercel.app/
 
-## Getting Started
+<h1 align="center" style="font-weight: bold;">Portfólio HerisonTech 💻</h1>
 
-First, run the development server:
+![NodeJS][NODE]
+![Next JS][NEXT]
+![TypeScript][TYPESCRIPT]
+![TailwindCSS][TAILWINDCSS]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<p align="center">
+ <a href="#about">About</a> • 
+  <a href="#colab">Collaborators</a>
+</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p align="center">
+    <img src="./public//images/home.png" alt="Image Example" width="800px">
+</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<h2 id="started">📌 About</h2>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Desenvolvi um portfólio para minha empresa com o objetivo de apresentar meus conhecimentos e projetos. Busco trazer soluções criativas e enfrentar desafios que contribuam para melhorar o dia a dia das pessoas, unindo tecnologia e inovação.
 
-## Learn More
+[![project][PROJECT__BADGE]][PROJECT__URL]
 
-To learn more about Next.js, take a look at the following resources:
+<h2 id="colab">🤝 Collaborator</h2>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="./public//images//Foto.png" width="100px;" alt="Steve Herison Profile Picture"/><br>
+        <sub>
+          <b>Steve Herison</b>'
+        </sub>
+      </a>
+    </td>
+    
+</table>
