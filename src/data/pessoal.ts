@@ -4,6 +4,9 @@ import Amanda from "@/assets/img/amanda.jpeg";
 import Geovanna from "@/assets/img/geovanna.jpeg";
 import Tarciane from "@/assets/img/tarciane.jpeg";
 import Logo from "@/assets/img/logo.png";
+import Gabriela from "@/assets/img/gabriela.jpeg";
+import Guilherme from "@/assets/img/guilherme.jpeg";
+import Anaclea from "@/assets/img/anaclea.jpeg";
 export const visitas = [
   {
     nome: "Elcyana Bezerra",
@@ -14,7 +17,7 @@ export const visitas = [
     nome: "Ana Cléa",
     descricao: "Professora do curso",
 
-    foto: Logo,
+    foto: Anaclea,
   },
   {
     nome: "Tarciane Moura Fé",
@@ -32,13 +35,13 @@ export const visitas = [
     nome: "Guilherme Santos",
     descricao: "Vice Coordenação Geral",
 
-    foto: Logo,
+    foto: Guilherme,
   },
   {
     nome: "Gabriela Maria",
     descricao: "Diretoria científica",
 
-    foto: Logo,
+    foto: Gabriela,
   },
   {
     nome: "Giovana Viana",
@@ -52,7 +55,7 @@ export const visitas = [
     foto: Debora,
   },
   {
-    nome: "Artur Moura",
+    nome: "Artur Mouta",
     descricao: "Equipe científica",
 
     foto: Artur,
