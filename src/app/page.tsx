@@ -15,6 +15,7 @@ import { LoginModal } from "@/components/modals/LoginModal";
 import axios from "axios";
 import { Sucess } from "@/components/modals/Sucess";
 import { CardsVisitas } from "@/components/CartoesDeVisita";
+import { Button } from "@/components/ui/button";
 
 interface Article {
   id: number;
@@ -38,6 +39,7 @@ export default function Home() {
   );
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [articles, setArticles] = useState<Article[]>([]);
 
@@ -91,6 +93,7 @@ export default function Home() {
     }
     fetchCategories();
   }, []);
+
   useEffect(() => {
     if (modalAdd) {
       document.body.style.overflow = "hidden";
@@ -102,14 +105,15 @@ export default function Home() {
       document.body.style.overflow = "";
     };
   }, [modalAdd]);
+
   const filteredItems = articles.filter((item) => {
     const matchesCategory = activeCategory
       ? item.categoryId === activeCategory
       : true;
     const matchesSearch =
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.author.toLowerCase().includes(searchTerm.toLowerCase());
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.author.toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchesCategory && matchesSearch;
   });
@@ -133,35 +137,45 @@ export default function Home() {
                 className="justify-center mb-8"
               />
             )}
-            <input
-              type="text"
-              placeholder="Buscar artigo por título, autor ou descrição..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full max-w-md mx-auto block px-4 py-2 border border-green-300 rounded-lg mb-8 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-            />
-
+            <div className="max-w-md w-full mx-auto mb-8 flex items-center gap-4">
+              <input
+                type="text"
+                placeholder="Buscar artigo por título, autor ou descrição..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="block px-4 py-2 border max-w-xl w-xl border-green-300 rounded-lg  focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+              <Button onClick={() => setSearchQuery(searchTerm)}>
+                Pesquisar
+              </Button>
+            </div>
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-3"> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-3">
               {filteredItems.map((item) => (
                 <Card
                   key={item.id}
-                  className="overflow-hidden border-green-200"
+                  className="overflow-hidden border-green-200 shadow-lg"
                 >
-                  <CardContent className="p-6 h-full  flex flex-col">
+                  <CardContent className="p-6 grid h-full">
                     <h3 className="text-xl font-semibold text-green-900 mb-2">
                       {item.title}
                     </h3>
+                    <span className="text-zinc-800 font-semibold text-md">
+                      Autores
+                    </span>
                     <p className="text-green-700 mb-4">{item.author}</p>{" "}
                     {/* ajustado para autor */}
+                    <span className="text-zinc-800 font-semibold text-md">
+                      Descrição
+                    </span>
                     <TruncatedDescription
                       text={item.description}
-                      maxLength={100}
+                      maxLength={150}
                     />
-                    <div className=" h-full flex items-end">
-                      <span className="text-sm text-green-600"></span>
+                    <div className=" h-full flex items-end mt-auto">
                       <Link
                         href={`${item.url}`}
-                        className="text-emerald-600 hover:text-emerald-700 font-medium text-sm"
+                        className="text-emerald-600  hover:text-emerald-700 font-medium text-sm"
                         target="_blank"
                       >
                         Ver Artigo →

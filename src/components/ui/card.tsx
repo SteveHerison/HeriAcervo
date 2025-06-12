@@ -12,7 +12,7 @@ export function TruncatedDescription({
   text,
   maxLength = 400,
 }: TruncatedDescriptionProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded] = useState(false);
 
   if (text.length <= maxLength) {
     return <p>{text}</p>;
@@ -23,12 +23,6 @@ export function TruncatedDescription({
       <p className="text-green-700 mb-4">
         {expanded ? text : text.slice(0, maxLength) + "..."}
       </p>
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className=" hover:underline text-sm text-green-700 mb-4"
-      >
-        {expanded ? "Ver menos" : "Ver mais"}
-      </button>
     </div>
   );
 }
@@ -38,7 +32,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border pb-6 shadow-sm",
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border  shadow-sm ",
         className
       )}
       {...props}

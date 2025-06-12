@@ -35,7 +35,7 @@ export default function CategoryFilter({
           variant="outline"
           size="sm"
           className={cn(
-            "rounded-full border-green-300",
+            "rounded-full border-green-300 hover:cursor-pointer",
             activeCategory === category.id && "bg-green-100 border-green-400"
           )}
           onClick={() => onSelectCategory(category.id)}
